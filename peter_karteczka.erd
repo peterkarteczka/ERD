@@ -1,0 +1,66 @@
+erdiagram RCModel
+notation=crowsfoot
+
+entity Customer {
+    Customer_ID: INTEGER key
+    Customer_Name: VARCHAR(100)
+    Customer_AreaCode: VARCHAR(10)
+    Cust_card_num: VARCHAR(20)
+}
+
+entity Marketing {
+    Subscriber_ID: INTEGER key
+    Sub_Name: VARCHAR(100)
+    Sub_Phone: VARCHAR(20)
+    Sub_Email: VARCHAR(100)
+}
+
+entity Invoice {
+    Invoice_ID: INTEGER key
+    Customer_ID: INTEGER
+    Invoice_Date: DATE
+}
+
+entity Line {
+    Line_ID: INTEGER key
+    Invoice_ID: INTEGER
+    Product_ID: INTEGER
+    Line_Units: INTEGER
+}
+
+entity Product {
+    Product_ID: INTEGER key
+    Vendor_ID: INTEGER
+    Product_QOH: INTEGER
+    Product_Price: DECIMAL
+}
+
+entity Vendor {
+    Vendor_ID: INTEGER key
+    Vendor_Name: VARCHAR(100)
+    Vendor_AreaCode: VARCHAR(10)
+    Vendor_Phone: VARCHAR(20)
+}
+
+relationship CustomerInvoice {
+    Customer[1 | "customer"] -> Invoice[0..N | "invoice"]
+}
+
+relationship InvoiceLine {
+    Invoice[1 | "invoice"] -> Line[0..N | "line_item"]
+}
+
+relationship ProductLine {
+    Product[1 | "product"] -> Line[0..N | "line_item"]
+}
+
+relationship VendorProduct {
+    Vendor[1 | "vendor"] -> Product[0..N | "product"]
+}
+
+relationship CustomerMarketing {
+    Customer[1 | "customer"] -> Marketing[1 | "subscriber"]
+}
+
+
+
